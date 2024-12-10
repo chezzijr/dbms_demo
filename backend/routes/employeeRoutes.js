@@ -4,7 +4,7 @@ const router = express.Router();
 const sql = require('mssql');
 const connectDB = require('../config/sqlConfig');
 
-router.get("/q", async (req, res) => {
+router.get("/search", async (req, res) => {
     const phone = req.query.phone ?? null;
     const positionFilter = req.query.position ?? null;
     const sortBy = req.query.sortBy ?? "FullName";
