@@ -42,6 +42,7 @@ router.post("/add", async (req, res) => {
     }
     try {
         const pool = await connectDB();
+        // call InsertStudent stored procedure
         const result = await pool.request()
             .input('Email', sql.VarChar, body.Email)
             .input('Password', sql.VarChar, body.Password)
@@ -50,7 +51,8 @@ router.post("/add", async (req, res) => {
             .input('PhoneNumber', sql.VarChar, body.PhoneNumber)
             .input('Address', sql.VarChar, body.Address)
             .input('AccountBalance', sql.Decimal, body.AccountBalance)
-            .query('insert into students (Email, Password, FirstName, LastName, PhoneNumber, Address, AccountBalance) values (@Email, @Password, @FirstName, @LastName, @PhoneNumber, @Address, @AccountBalance)')
+            // .query('insert into students (Email, Password, FirstName, LastName, PhoneNumber, Address, AccountBalance) values (@Email, @Password, @FirstName, @LastName, @PhoneNumber, @Address, @AccountBalance)')
+            .execute('InsertStudent');
         res.json(result)
     } catch (err) {
         res.status(500).json({ message: "Error: " + err.message })
@@ -73,8 +75,9 @@ router.put("/update", async (req, res) => {
             .input('PhoneNumber', sql.VarChar, body.PhoneNumber)
             .input('Address', sql.VarChar, body.Address)
             .input('AccountBalance', sql.Decimal, body.AccountBalance)
-            .input('id', sql.Int, body.StudentID)
-            .query('update students set Email = @Email, Password = @Password, FirstName = @FirstName, LastName = @LastName, PhoneNumber = @PhoneNumber, Address = @Address, AccountBalance = @AccountBalance where StudentID = @id')
+            .input('StudentID', sql.Int, body.StudentID)
+            // .query('update students set Email = @Email, Password = @Password, FirstName = @FirstName, LastName = @LastName, PhoneNumber = @PhoneNumber, Address = @Address, AccountBalance = @AccountBalance where StudentID = @id')
+            .execute('UpdateStudent');
         res.json(result)
     } catch (err) {
         res.status(500).json({ message: "Error: " + err.message })
@@ -91,11 +94,13 @@ router.delete("/delete/:id", async (req, res) => {
     if (!isNumeric(id)) {
         res.status(422).json({ message: "Error: invalid query parameter" })
     }
+    const studentID = parseInt(id);
     try {
         const pool = await connectDB();
         const result = await pool.request()
-            .input('id', sql.Int, id)
-            .query('delete from students where StudentID = @id')
+            .input('StudentID', sql.Int, studentID)
+            // .query('delete from students where StudentID = @id')
+            .execute('DeleteStudent');
         res.json(result)
     } catch (err) {
         res.status(500).json({ message: "Error: " + err.message })
