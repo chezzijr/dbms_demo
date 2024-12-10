@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import "../css/revenue.css";
+import Header from '../components/header';
 export const Revenue = () => {
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
@@ -38,17 +39,22 @@ export const Revenue = () => {
     }
   };
   return (
+    
     <div>
+      <Header/>
       <h1>Danh sách thanh toán và Doanh thu</h1>
 
       {/* Phần chọn ngày */}
-      <div>
-        <label htmlFor="startDate">Start Date: </label>
-        <input type="date" id="startDate" value={startDate} onChange={handleDateChange} />
-        <label htmlFor="endDate">End Date: </label>
-        <input type="date" id="endDate" value={endDate} onChange={handleDateChange} />
-        <button onClick={handleSearch}>Tìm kiếm</button>
-      </div>
+      <div className="search-container">
+  <label htmlFor="startDate">Start Date: </label>
+  <input type="date" id="startDate" value={startDate} onChange={handleDateChange} />
+  
+  <label htmlFor="endDate">End Date: </label>
+  <input type="date" id="endDate" value={endDate} onChange={handleDateChange} />
+  
+  <button onClick={handleSearch}>Tìm kiếm</button>
+</div>
+
 
       {/* Hiển thị tổng doanh thu */}
       <div>
