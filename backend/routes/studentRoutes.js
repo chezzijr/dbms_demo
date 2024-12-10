@@ -2,27 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const sql = require('mssql');
-const config  = {
-    user: "sa",
-    password: "123456789",
-    server: 'localhost', 
-    database: 'KhoaHocOnline',
-    options: {
-        encrypt: false,
-        trustServerCertificate: true, 
-    },
-    parseJSON: true
-};
-
-sql.connect(config, err => {
-    if (err) {
-        throw err;
-    }
-    console.log("Connection Successful!");
-});
-
-const app = express()
-app.use(express.json())
+const connectDB = require('../config/sqlConfig');
 
 function validateStudentPayload(sp, withId = false) {
     const keys = ["Email", "Password", "FirstName", "LastName", "PhoneNumber", "Address", "AccountBalance"]
@@ -39,8 +19,9 @@ function validateStudentPayload(sp, withId = false) {
 
 // get
 router.get("/get", async (req, res) => {
-    const result = await sql.query`select * from students for json auto`
-    res.json(result.recordset[0])
+    const pool = await connectDB();
+    const result = await pool.request().query('select * from students')
+    res.json(result.recordset)
 })
 // add
 router.post("/add", async (req, res) => {
@@ -48,20 +29,16 @@ router.post("/add", async (req, res) => {
     if (!validateStudentPayload(body)) {
         res.status(422).send("You stupid")
     }
-    // true sigma will never be afraid of sql injection
-    const result = await sql.query`
-        insert into (Email, Password, FirstName, LastName, PhoneNumber, Address, AccountBalance)
-        values (
-            ${body.Email},
-            ${body.Password},
-            ${body.FirstName},
-            ${body.LastName},
-            ${body.PhoneNumber},
-            ${body.Address},
-            ${body.AccountBalance}
-        )
-    
-    `
+    const pool = await connectDB();
+    const result = await pool.request()
+        .input('Email', sql.VarChar, body.Email)
+        .input('Password', sql.VarChar, body.Password)
+        .input('FirstName', sql.VarChar, body.FirstName)
+        .input('LastName', sql.VarChar, body.LastName)
+        .input('PhoneNumber', sql.VarChar, body.PhoneNumber)
+        .input('Address', sql.VarChar, body.Address)
+        .input('AccountBalance', sql.Decimal, body.AccountBalance)
+        .query('insert into students (Email, Password, FirstName, LastName, PhoneNumber, Address, AccountBalance) values (@Email, @Password, @FirstName, @LastName, @PhoneNumber, @Address, @AccountBalance)')
     res.json(result)
 })
 
@@ -71,28 +48,27 @@ router.put("/update", async (req, res) => {
     if (!validateStudentPayload(body, withId = true)) {
         res.status(422).send("You stupid")
     }
-    const result = await sql.query`
-        update students
-        set
-            Email = ${body.Email},
-            Password = ${body.Password},
-            FirstName = ${body.FirstName},
-            LastName = ${body.LastName},
-            PhoneNumber = ${body.PhoneNumber},
-            Address = ${body.Address},
-            AccountBalance = ${body.AccountBalance}
-        where StudentID = ${body.id}
-    `
+    const pool = await connectDB();
+    const result = await pool.request()
+        .input('Email', sql.VarChar, body.Email)
+        .input('Password', sql.VarChar, body.Password)
+        .input('FirstName', sql.VarChar, body.FirstName)
+        .input('LastName', sql.VarChar, body.LastName)
+        .input('PhoneNumber', sql.VarChar, body.PhoneNumber)
+        .input('Address', sql.VarChar, body.Address)
+        .input('AccountBalance', sql.Decimal, body.AccountBalance)
+        .input('id', sql.Int, body.StudentID)
+        .query('update students set Email = @Email, Password = @Password, FirstName = @FirstName, LastName = @LastName, PhoneNumber = @PhoneNumber, Address = @Address, AccountBalance = @AccountBalance where StudentID = @id')
     res.json(result)
 })
 
 // delete
 router.delete("/delete/:id", async (req, res) => {
     const id = req.params.id
-    const result = await sql.query`
-        delete from students
-        where StudentID = ${id}
-    `
+    const pool = await connectDB();
+    const result = await pool.request()
+        .input('id', sql.Int, id)
+        .query('delete from students where StudentID = @id')
     res.json(result)
 })
 
