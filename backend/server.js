@@ -6,6 +6,7 @@ const connectDB = require("./config/sqlConfig");
 const sql = require('mssql');
 const paymentRoutes = require('./routes/paymentRoutes');
 const studentRoutes = require('./routes/studentRoutes');
+const employeeRoutes = require('./routes/employeeRoutes');
 // Import thêm các routes khác nếu cần
 
 const app = express();
@@ -15,7 +16,7 @@ app.use(bodyParser.json());
 app.use(cors());  
 app.use('/api/payment', paymentRoutes);
 app.use('/api/student', studentRoutes);
-
+app.use('/api/employee', employeeRoutes);
 
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);
