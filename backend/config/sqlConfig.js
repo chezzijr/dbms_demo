@@ -1,19 +1,20 @@
 const sql = require("mssql");
 
-const sqlConfig = {
+const config = {
   user: "sa",
-  password: "huy1202",
-  server: "localhost",
-  database: "KhoaHocOnline",
+  password: process.env.PASSWORD,
+  server: 'localhost', 
+  database: 'KhoaHocOnline',
   options: {
-    encrypt: true,
-    trustServerCertificate: true,
+      encrypt: false,
+      trustServerCertificate: true, 
   },
+  parseJSON: true
 };
 
 const connectDB = async () => {
   try {
-    return await sql.connect(sqlConfig);
+    return await sql.connect(config);
   } catch (err) {
     console.error("Database connection error:", err);
     throw err;
