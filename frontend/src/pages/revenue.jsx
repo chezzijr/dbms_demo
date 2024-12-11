@@ -79,7 +79,7 @@ export const Revenue = () => {
                 <tr key={index}>
                   <td>{payment.StudentName}</td>
                   <td>{payment.ClassName}</td>
-                  <td>{payment.Amount.toLocaleString()}</td>
+                  <td>{payment.Amount.toLocaleString()+"000"}</td>
                   <td>{new Date(payment.PaymentDate).toLocaleDateString()}</td>
                   <td>{payment.PaymentMethod}</td>
                 </tr>
