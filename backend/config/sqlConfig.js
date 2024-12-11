@@ -2,13 +2,14 @@ const sql = require("mssql");
 
 const sqlConfig = {
   user: "sa",
-  password: "huy1202",
+  password: "1",
   server: "localhost",
   database: "KhoaHocOnline",
   options: {
     encrypt: true,
     trustServerCertificate: true,
   },
+
 };
 
 const connectDB = async () => {

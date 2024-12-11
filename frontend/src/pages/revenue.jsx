@@ -22,6 +22,7 @@ export const Revenue = () => {
       // API call to fetch the data
       axios.get(`http://localhost:5000/api/payment/get?startDate=${startDate}&endDate=${endDate}`)
         .then(response => {
+          console.log(response.data);
           setPayments(response.data);
         })
         .catch(error => {
