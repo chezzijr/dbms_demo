@@ -13,6 +13,7 @@ body {
 
 /* Định dạng phần tiêu đề */
 h1 {
+  margin-bottom: 20px;
   text-align: center;
   margin-top: 20px;
   font-size: 2rem;
@@ -85,7 +86,10 @@ p {
 
 /* Điều chỉnh cho phần bố cục chính */
 div {
-  margin: 20px;
+  width:100%;
+  
+
+  text-align: center;
 }
 
 /* Điều chỉnh bảng để phù hợp với màn hình di động */

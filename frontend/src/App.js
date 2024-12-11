@@ -5,6 +5,8 @@ import StudentForm from "./pages/StudentForm.jsx";
 import DeleteStudent from "./pages/deleteStudent.jsx";  // Import DeleteStudent
 import StudentList from "./pages/StudentList.jsx";  // Import StudentList
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { Revenue } from "./pages/revenue.jsx";
 
 function App() {

@@ -11,6 +11,7 @@ const employeeRoutes = require('./routes/employeeRoutes');
 const app = express();
 const port = 5000;
 
+
 // Kết nối với cơ sở dữ liệu khi ứng dụng khởi động
 connectDB().then(() => {
   console.log("Connected to the database");
