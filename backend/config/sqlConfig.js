@@ -2,7 +2,7 @@ const sql = require("mssql");
 
 const config = {
   user: "sa",
-  password: process.env.PASSWORD,
+  password: "huy",
   server: 'localhost', 
   database: 'KhoaHocOnline',
   options: {
