@@ -29,8 +29,8 @@ const StudentForm = () => {
   const handleAddStudent = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
-        "http://localhost:5000/api/student/add",
+      const response = await axios.put(
+        "http://localhost:5000/api/student/update",
         student
       );
       setResponseMessage(response.data.message || "Student added successfully!");
