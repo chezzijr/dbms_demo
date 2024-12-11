@@ -1,0 +1,93 @@
+/* frontend/src/css/addStudent.css */
+
+/* Container chính của form */
+.form-container {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 900px; /* Đảm bảo form đủ rộng để có 2 cột */
+    margin: 50px auto;
+  }
+  
+  /* Tiêu đề */
+  h2 {
+    text-align: center;
+    font-size: 1.8rem;
+    color: #333;
+    margin-bottom: 20px;
+    font-weight: 500;
+  }
+  
+  /* Form */
+  form {
+    display: flex;
+    flex-wrap: wrap; /* Cho phép các mục trong form gói lại khi hết chỗ */
+  }
+  
+  /* Các trường nhập liệu */
+  form div {
+    margin-bottom: 20px;
+    flex: 1 1 48%; /* Mỗi trường chiếm 48% chiều rộng để có 2 trường trên mỗi hàng */
+    box-sizing: border-box;
+    padding-right: 10px; /* Khoảng cách giữa các cột */
+  }
+  
+  form div:nth-child(even) {
+    padding-right: 0; /* Xóa khoảng cách bên phải của các trường chẵn để căn chỉnh */
+  }
+  
+  /* Nhãn cho các trường */
+  label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: #555;
+  }
+  
+  /* Input fields */
+  input {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px; /* Bo tròn các ô nhập liệu */
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    color: #333;
+    background-color: #f9f9f9;
+    transition: border-color 0.3s ease;
+  }
+  
+  input:focus {
+    border-color: #4CAF50;
+    outline: none;
+    background-color: #ffffff;
+  }
+  
+  /* Nút submit */
+  button {
+    padding: 12px;
+    background-color: #4CAF50;
+    color: white;
+    font-size: 1rem;
+    border: none;
+    border-radius: 8px; /* Bo tròn nút submit */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%; /* Nút chiếm 100% chiều rộng của form */
+    margin-top: 20px;
+  }
+  
+  button:hover {
+    background-color: #45a049;
+  }
+  
+  button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  /* Thêm margin-bottom cho form để dễ nhìn */
+  form {
+    margin-bottom: 40px;
+  }
+  
