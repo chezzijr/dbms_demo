@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import Table from "../components/Table";
+import Notification from "../components/Notification";
 import "../css/tailwind.css";
 
 // API functions
@@ -51,6 +52,8 @@ const updateEmployee = async (employee) => {
 
 export const Employee = () => {
   const [data, setData] = useState([]);
+  const [noti, setNoti] = useState("");
+  const [isEditing, setIsEditing] = useState(false);
   const [newEmployee, setNewEmployee] = useState({
     Email: '',
     Password: '',
@@ -73,7 +76,13 @@ export const Employee = () => {
     sortBy: 'ID',
     sortOrder: 'ASC',
   });
-  const [isEditing, setIsEditing] = useState(false);
+  
+  const trigNoti = (noti) => {
+    setNoti(noti);
+    setTimeout(() => {
+      setNoti("");
+    }, 3000);
+  };
 
   // Cập nhật giá trị các bộ lọc
   const handleFilterChange = (e) => {
@@ -85,13 +94,18 @@ export const Employee = () => {
   };
 
   // Hàm gọi API khi lấy dữ liệu
-  const handleSearch = () => {
-    loadData();
+  const handleSearch = async () => {
+    const result = await loadData(); // Đợi loadData() hoàn thành
+    if (result === -1) {
+      trigNoti("Nhập số điện thoại đầy đủ");
+    }
   };
 
   const loadData = async () => {
-    const employees = await fetchData(filters);
-    setData(employees)
+    const response = await fetchData(filters);
+    console.log(Array.isArray(response))
+    if (Array.isArray(response)) {setData(response);}
+    else {return -1;}
   };
 
   // Lưu thông tin nhân viên mới
@@ -120,9 +134,11 @@ export const Employee = () => {
     if (isEditing) {
       const response = await updateEmployee(newEmployee);
       console.log(response)
+      trigNoti(response.message)
     } else {
       const response = await addEmployee(newEmployee);
       console.log(response)
+      trigNoti(response.message)
     }
     loadData()
     resetNewEmployee();
@@ -179,7 +195,27 @@ export const Employee = () => {
             className="p-2 border border-gray-300 rounded"
           >
             <option value="ID">ID</option>
+            <option value="Email">Email</option>
+            <option value="FullName">Họ tên</option>
+            <option value="PhoneNumber">SĐT</option>
+            <option value="Position">Chức vụ</option>
             <option value="Salary">Lương</option>
+            <option value="Expertise">Chuyên môn</option>
+            <option value="Experience">Kinh nghiệm</option>
+            <option value="CommunicationSkill">KN Giao Tiếp</option>
+          </select>
+        </div>
+        <div className="flex items-center gap-2">
+          <label htmlFor="sort" className="text-gray-700">Sắp xếp:</label>
+          <select
+            id="sort"
+            name="sortOrder"
+            value={filters.sortOrder}
+            onChange={handleFilterChange}
+            className="p-2 border border-gray-300 rounded"
+          >
+            <option value="ASC">Tăng dần</option>
+            <option value="DESC">Giảm dần</option>
           </select>
         </div>
         {/* Thêm Select lọc theo chức vụ */}
@@ -208,7 +244,7 @@ export const Employee = () => {
 
       {/* Bảng hiển thị nhân viên */}
       <Table data={data} onEdit={handleEdit} />
-
+      <Notification noti={noti} />
       {/* Form Thêm / Chỉnh sửa */}
       <div className="mt-6 p-4 border border-gray-300 rounded bg-gray-50 max-w-md mx-auto">
         <h2 className="text-lg font-bold mb-4">{isEditing ? 'Chỉnh sửa nhân viên' : 'Thêm nhân viên mới'}</h2>
