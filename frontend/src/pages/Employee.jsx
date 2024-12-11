@@ -49,19 +49,6 @@ const updateEmployee = async (employee) => {
   }
 };
 
-const deleteEmployee = async (id) => {
-  try {
-    const response = await fetch(`/api/employees/${id}`, {
-      method: 'DELETE',
-    });
-    const result = await response.json();
-    return result;
-  } catch (error) {
-    console.error('Error deleting employee:', error);
-  }
-};
-
-
 export const Employee = () => {
   const [data, setData] = useState([]);
   const [newEmployee, setNewEmployee] = useState({
@@ -142,11 +129,6 @@ export const Employee = () => {
     setIsEditing(false);
   };
 
-  const handleDelete = async (id) => {
-    await deleteEmployee(id);
-    loadData()
-  };
-
   const handleCancelEdit = () => {
     resetNewEmployee();
     setIsEditing(false);
@@ -225,7 +207,7 @@ export const Employee = () => {
       </div>
 
       {/* Bảng hiển thị nhân viên */}
-      <Table data={data} onEdit={handleEdit} onDelete={handleDelete} />
+      <Table data={data} onEdit={handleEdit} />
 
       {/* Form Thêm / Chỉnh sửa */}
       <div className="mt-6 p-4 border border-gray-300 rounded bg-gray-50 max-w-md mx-auto">
@@ -240,24 +222,23 @@ export const Employee = () => {
           />
           <input
             type="text"
-            placeholder="Mật khẩu"
-            value={newEmployee.Password}
-            onChange={(e) => setNewEmployee({ ...newEmployee, Password: e.target.value })}
-            className="p-2 border border-gray-300 rounded"
-          />
-          
-          <input
-            type="text"
-            placeholder="Tên NV"
+            placeholder="Họ NV"
             value={newEmployee.FirstName}
             onChange={(e) => setNewEmployee({ ...newEmployee, FirstName: e.target.value })}
             className="p-2 border border-gray-300 rounded"
           />
           <input
             type="text"
-            placeholder="Họ NV"
+            placeholder="Tên NV"
             value={newEmployee.LastName}
             onChange={(e) => setNewEmployee({ ...newEmployee, LastName: e.target.value })}
+            className="p-2 border border-gray-300 rounded"
+          />
+          <input
+            type="text"
+            placeholder="Mật khẩu"
+            value={newEmployee.Password}
+            onChange={(e) => setNewEmployee({ ...newEmployee, Password: e.target.value })}
             className="p-2 border border-gray-300 rounded"
           />
           <input

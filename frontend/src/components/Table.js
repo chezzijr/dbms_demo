@@ -1,4 +1,4 @@
-export default function Table({ data, onEdit, onDelete }) {
+export default function Table({ data, onEdit }) {
     return (
       <div className="max-h-[400px] overflow-y-auto"> {/* Giới hạn chiều cao bảng và thêm cuộn dọc */}
         <table className="min-w-full bg-white border border-gray-300 table-fixed">
@@ -39,12 +39,6 @@ export default function Table({ data, onEdit, onDelete }) {
                     className="mr-2 p-2 bg-yellow-400 text-white rounded hover:bg-yellow-600"
                   >
                     Chỉnh sửa
-                  </button>
-                  <button
-                    onClick={() => onDelete(row.id)}
-                    className="p-2 bg-red-500 text-white rounded hover:bg-red-700"
-                  >
-                    Xóa
                   </button>
                 </td>
               </tr>
