@@ -5,7 +5,7 @@ const sql = require('mssql');
 const connectDB = require('../config/sqlConfig');
 
 function validateStudentPayload(sp, withId = false) {
-    const keys = ["Email", "Password", "FirstName", "LastName", "PhoneNumber", "Address", "AccountBalance"]
+    const keys = ["Email", "Password", "FirstName", "LastName", "PhoneNumber", "Address"]
     for (const key of keys) {
         if (!sp[key]) {
             return false
@@ -38,24 +38,28 @@ router.post("/add", async (req, res) => {
     const body = req.body
     if (!validateStudentPayload(body)) {
         res.status(422).json({ message: "Error: invalid body type" })
+        console.log("fail exe");
         return
     }
     try {
         const pool = await connectDB();
         // call InsertStudent stored procedure
         const result = await pool.request()
+        
+        
             .input('Email', sql.VarChar, body.Email)
             .input('Password', sql.VarChar, body.Password)
             .input('FirstName', sql.VarChar, body.FirstName)
             .input('LastName', sql.VarChar, body.LastName)
             .input('PhoneNumber', sql.VarChar, body.PhoneNumber)
             .input('Address', sql.VarChar, body.Address)
-            .input('AccountBalance', sql.Decimal, body.AccountBalance)
             // .query('insert into students (Email, Password, FirstName, LastName, PhoneNumber, Address, AccountBalance) values (@Email, @Password, @FirstName, @LastName, @PhoneNumber, @Address, @AccountBalance)')
             .execute('InsertStudent');
+           
+            console.log("testing");
         res.json(result)
     } catch (err) {
-        res.status(500).json({ message: "Error: " + err.message })
+        res.status(500).json({ message: err.message })
     }
 })
 
@@ -80,7 +84,7 @@ router.put("/update", async (req, res) => {
             .execute('UpdateStudent');
         res.json(result)
     } catch (err) {
-        res.status(500).json({ message: "Error: " + err.message })
+        res.status(500).json({ message: err.message })
     }
 })
 
@@ -103,7 +107,7 @@ router.delete("/delete/:id", async (req, res) => {
             .execute('DeleteStudent');
         res.json(result)
     } catch (err) {
-        res.status(500).json({ message: "Error: " + err.message })
+        res.status(500).json({ message: err.message })
     }
 })
 

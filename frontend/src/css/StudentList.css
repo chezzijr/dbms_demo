@@ -1,0 +1,55 @@
+/* src/css/StudentList.css */
+
+.student-list {
+    margin: 30px;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  /* Header */
+  .student-list h2 {
+    font-weight: bold; /* In đậm */
+    text-align: center; /* Căn giữa */
+    font-size: 2rem; /* Tăng kích thước chữ */
+    color: #2c3e50; /* Màu tối đẹp mắt */
+    margin-bottom: 30px; /* Khoảng cách dưới */
+  }
+  
+  /* Thanh tìm kiếm */
+  .search-container {
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .search-container .p-inputtext {
+    width: 250px; /* Chiều rộng của input tìm kiếm */
+    font-size: 1.1rem; /* Kích thước chữ */
+  }
+  
+  .p-input-icon-left {
+    font-size: 1.3rem; /* Kích thước biểu tượng tìm kiếm */
+    margin-right: 10px; /* Khoảng cách giữa icon và input */
+  }
+  
+  /* DataTable */
+  
+  
+  .p-datatable th {
+    background-color: #f5f5f5; /* Màu nền cho header bảng */
+    font-weight: bold; /* In đậm header của bảng */
+    text-align: center;
+    color: #34495e;
+  }
+  
+  .p-datatable td {
+    text-align: center; /* Căn giữa dữ liệu */
+    padding: 10px 15px;
+  }
+  
+  .p-datatable .p-column-title {
+    font-weight: bold; /* Làm đậm tên cột */
+  }
+  
+  
+  
