@@ -8,7 +8,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Revenue } from "./pages/revenue.jsx";
-
+import { Employee } from "./pages/Employee.jsx";  
 function App() {
   return (
     <Router>
@@ -18,6 +18,7 @@ function App() {
         <Route path="/delete" element={<DeleteStudent />} />
         <Route path="/students" element={<StudentList />} /> {/* Thêm route cho StudentList */}
         <Route path="/revenue" element={<Revenue />} />
+        <Route path="/employee" element={< Employee />} /> 
       </Routes>
     </Router>
   );
